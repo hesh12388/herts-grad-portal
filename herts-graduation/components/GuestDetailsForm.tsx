@@ -31,7 +31,6 @@ interface GuestDetailsModalProps {
 }
 
 export default function GuestDetailsModal({ guest, onClose }: GuestDetailsModalProps) {
-    const [isDeleting, setIsDeleting] = useState(false)
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
     const deleteGuest = useDeleteGuest()
@@ -202,7 +201,7 @@ export default function GuestDetailsModal({ guest, onClose }: GuestDetailsModalP
               type="button"
               onClick={onClose}
               className={`${styles.button} ${styles.closeButton}`}
-              disabled={isDeleting}
+              disabled={deleteGuest.isPending}
             >
               Close
             </button>
@@ -215,8 +214,8 @@ export default function GuestDetailsModal({ guest, onClose }: GuestDetailsModalP
               className={`${styles.button} ${styles.deleteButton}`}
               disabled={deleteGuest.isPending}
             >
-              {isDeleting && <span className={styles.loadingSpinner}></span>}
-              {isDeleting ? 'Deleting...' : 'Delete Guest'}
+              {deleteGuest.isPending && <span className={styles.loadingSpinner}></span>}
+              {deleteGuest.isPending ? 'Deleting...' : 'Delete Guest'}
             </button>
           </div>
         </div>

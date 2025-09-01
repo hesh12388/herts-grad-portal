@@ -27,7 +27,7 @@ export default function Footer() {
         {/* Top Section */}
         <div className={styles.topSection}>
          
-            <h2 className={styles.footerTitle}>GRADUATION REGISTRATION</h2>
+            <h2 className={styles.footerTitle}>CAP & GOWN REGISTRATION</h2>
             <button className={styles.registerButton} onClick={handleRegisterGuests}>
               Register Guests
               <img 

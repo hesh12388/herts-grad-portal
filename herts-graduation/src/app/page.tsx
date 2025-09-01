@@ -32,12 +32,12 @@ export default function HomePage() {
         <div className={styles.heroContent}>
             <div className={styles.heroText}>
                 <h1 className={styles.heroTitle}>
-                GRADUATION
+                CAP & GOWN
                 <br />
                 REGISTRATION
                 </h1>
                 <p className={styles.heroSubtitle}>
-                Register your guests for the upcoming graduation ceremony
+                Register your guests for the upcoming cap and gown ceremony
                 </p>
             </div>
          
