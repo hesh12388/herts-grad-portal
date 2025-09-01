@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
       
       try {
 
-        if (!user.email?.endsWith('gaf.ac') && !user.email?.endsWith('outlook.com')) {
+        if (!user.email?.endsWith('gaf.ac')) {
             console.log('Non-university email attempted:', user.email)
             return false // This blocks the sign-in
         }
