@@ -3,10 +3,10 @@ import { prisma } from "@/app/lib/prisma"
 
 export async function GET(
   req: Request,
-  { params }: { params: { qrCodeId: string } }
+  { params }: { params: Promise<{ qrCodeId: string }> }
 ) {
   try {
-    const { qrCodeId } = params
+    const { qrCodeId } = await params
 
     if (!qrCodeId) {
       return NextResponse.json({ error: "QR Code ID is required" }, { status: 400 })

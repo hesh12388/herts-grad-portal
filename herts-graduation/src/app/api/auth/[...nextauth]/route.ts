@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
         if (user) {
           
             const dbUser = await prisma.user.findUnique({
-            where: { email: user.email! }
+              where: { email: user.email! }
             })
             
             if (dbUser) {
