@@ -10,7 +10,6 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 
 export default function Navbar() {
 
-  
   const { data: session, status } = useSession()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const searchParams = useSearchParams()
@@ -61,7 +60,10 @@ export default function Navbar() {
       setTimeout(() => setError(null), 5000)
       
       // Clean up URL (remove error param)
-      router.replace('/', undefined)
+      const newParams = new URLSearchParams(searchParams.toString())
+      newParams.delete('error')
+      const newUrl = `${window.location.pathname}${newParams.toString() ? '?' + newParams.toString() : ''}`
+      router.replace(newUrl)
     }
   }, [searchParams, router])
 

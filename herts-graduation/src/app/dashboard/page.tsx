@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useGuests, useDeleteGuest } from '@/app/hooks/useGuests'
 import styles from '@/app/css/dashboard.module.css'
 import AddGuestForm from '../../../components/AddGuestForm'
 import ConfirmDeleteModal from '../../../components/ConfirmDeleteModal'
 import GuestDetailsForm from '../../../components/GuestDetailsForm'
+import { useSession } from 'next-auth/react'
 
 interface Guest {
   id: string
@@ -28,15 +29,20 @@ interface Guest {
 }
 
 export default function Dashboard() {
+  const { data: session, status } = useSession()
   const router = useRouter()
-  const searchParams = useSearchParams()
-
   const [showAddForm, setShowAddForm] = useState(false)
   const [guestToDelete, setGuestToDelete] = useState<Guest | null>(null)
   const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null)
   
   const { data: guests, isLoading, isError } = useGuests()
   const deleteGuest = useDeleteGuest()
+
+  useEffect(() => {
+    if (status === "unauthenticated" || (!session && status !== "loading")) {
+      router.push("/")
+    }
+  }, [session, status, router])
 
   const handleDeleteGuest = (guest: Guest) => {
     setGuestToDelete(guest)

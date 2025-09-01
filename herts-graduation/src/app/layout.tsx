@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import '@/app/css/globals.css'
 import Providers from '../../components/Providers'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'University of Hertfordshire - Graduation Registration',
@@ -21,7 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <Navbar />
+          <Suspense fallback={<div></div>}>
+            <Navbar />
+          </Suspense>
           <main>
             {children}
           </main>
