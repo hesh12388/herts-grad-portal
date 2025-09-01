@@ -1,0 +1,212 @@
+.footer {
+  background: #30444f;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  margin-top: auto;
+  width:100%;
+}
+
+.container {
+  width: 100%;
+  padding: 40px 100px;
+}
+
+/* Top Section */
+.topSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #656667;
+}
+
+.footerTitle {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: white;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+
+.registerButton {
+  background: #9a46cf;
+  color: white;
+  border: none;
+  padding: 24px 32px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(154, 70, 207, 0.3);
+}
+
+.registerButton:hover {
+  box-shadow: 0 6px 20px rgba(154, 70, 207, 0.4);
+  gap: 24px;
+}
+
+.bottomSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 80px 0px;
+  height:100%;
+}
+
+.logoColumn {
+
+  align-self: center;
+}
+
+.logo {
+  width: 300px;
+  height: 70px;
+}
+
+.buttonIcon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Copyright */
+.copyright {
+  border-top: 1px solid #4a5568;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.copyright p {
+  color: #a0aec0;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.footerColumn{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.columnTitle{
+    font-size: 18px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+}
+
+.contactItem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.contactIcon{
+    width: 25px;
+    height: 25px;
+}
+
+.contactText{
+    font-size: 14px;
+    color: white;
+    font-weight: bolder;
+}
+
+.socialIcons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.socialIcon{
+    width: 30px;
+    height: 30px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .container {
+    padding: 30px 20px;
+  }
+  .topSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding-bottom: 24px;
+  }
+  .footerTitle {
+    font-size: 2rem;
+    text-align: left;
+  }
+  .registerButton {
+    width: 100%;
+    justify-content: center;
+    padding: 18px 0;
+  }
+  .bottomSection {
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 0px;
+    align-items: stretch;
+  }
+  .logoColumn {
+    align-self: flex-start;
+    margin-bottom: 24px;
+  }
+  .footerColumn {
+    gap: 18px;
+  }
+  .socialIcons {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 18px 6px;
+  }
+  .topSection {
+    gap: 16px;
+    padding-bottom: 16px;
+  }
+  .footerTitle {
+    font-size: 1.2rem;
+    text-align: left;
+  }
+  .registerButton {
+    font-size: 14px;
+    padding: 12px 0;
+  }
+  .bottomSection {
+    gap: 24px;
+    padding: 24px 0px;
+  }
+  .logo {
+    width: 160px;
+    height: 40px;
+  }
+  .footerColumn {
+    gap: 12px;
+  }
+  .columnTitle {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .contactText {
+    font-size: 12px;
+  }
+  .socialIcon {
+    width: 22px;
+    height: 22px;
+  }
+}

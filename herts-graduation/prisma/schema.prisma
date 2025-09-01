@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+// Users table - represents graduates who can register guests
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  maxGuests Int      @default(50)
+  createdAt DateTime @default(now())  
+  // Relationships
+  guests    Guest[]  // One user can have many guests
+  
+  @@map("users")
+}
+
+// Guests table - people the graduates are bringing
+model Guest {
+  id             String   @id @default(uuid())
+  firstName      String
+  lastName       String
+  governmentId   String   // Government ID number
+  idImageUrl     String   // S3 URL for government ID photo
+  phoneNumber    String
+  email          String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Foreign keys
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Relationships
+  qrCode         QRCode?  // One guest has one QR code
+  
+  @@map("guests")
+}
+
+// QR Codes table - for entry management
+model QRCode {
+  id        String     @id @default(uuid())
+  code      String     @unique
+  status    QRStatus   @default(VALID)
+  scannedAt DateTime?  
+  createdAt DateTime   @default(now())
+  
+  // Foreign keys
+  guestId   String     @unique // One-to-one with guest
+  guest     Guest      @relation(fields: [guestId], references: [id], onDelete: Cascade)
+  
+  @@map("qr_codes")
+}
+
+// Enum for QR code status
+enum QRStatus {
+  VALID    // Can be used for entry
+  USED     // Already scanned/used
+  EXPIRED  // Past expiration
+  REVOKED  // Manually disabled
+}

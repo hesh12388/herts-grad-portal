@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+/* Navbar container */
+.navbar {
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.errorBanner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 200;
+  background: #d32f2f;
+  color: #fff;
+  text-align: center;
+  padding: 16px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  letter-spacing: 0.02em;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+}
+
+.logo {
+  position: relative;
+  width: 300px;
+  height: 60px;
+}
+
+/* Desktop Navigation */
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.navLink {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bolder;
+  letter-spacing: 0.5px;
+  color: #333;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navLink:hover {
+  color: #7B46C7;
+  transform: translateY(-1px);
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #7B46C7;
+  transition: width 0.3s ease;
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.userEmail {
+  font-size: 14px;
+  font-weight: bolder;
+  color: #666;
+}
+
+
+.button {
+  background: #9a46cf;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap:40px;
+  color: white;
+  border: none;
+  padding: 20px 20px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.button:hover {
+  gap:60px;
+  box-shadow: 0 4px 12px rgba(123, 70, 199, 0.3);
+}
+
+.buttonText {
+  font-size: 14px;
+  font-weight: bolder;
+}
+
+/* Mobile Menu Button */
+.mobileMenuButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mobileMenuIcon {
+  position: relative;
+}
+
+.mobileMenuButton:hover {
+  background: #f8f9fa;
+}
+
+/* Mobile Menu Overlay */
+.mobileMenuOverlay {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f0f0f0;
+  z-index: 99;
+}
+
+
+.mobileMenuContent {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.mobileNavLink {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bolder;
+  letter-spacing: 0.5px;
+  color: #333;
+  cursor: pointer;
+  padding: 15px 0;
+  text-align: left;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #cacaca;
+}
+
+.mobileNavLink:hover {
+  color: #7B46C7;
+}
+
+.mobileUserEmail {
+  font-size: 16px;
+  font-weight: bolder;
+  color: #666;
+}
+
+
+.mobileButton {
+  background: #9a46cf;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap:10px;
+  justify-content: center;
+  color: white;
+  border: none;
+  padding: 20px 20px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  width:100%;
+}
+
+.mobileButton:hover {
+  background: #6B3AB7;
+  transform: scale(1.02);
+}
+
+.mobileLogoutButton {
+  background: white;
+  color: #666;
+  border: 2px solid #ddd;
+  padding: 14px 30px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  width: 100%;
+}
+
+.mobileLogoutButton:hover {
+  background: #f8f9fa;
+  border-color: #999;
+  transform: scale(1.02);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .desktopNav {
+    display: none;
+  }
+  
+  .mobileMenuButton {
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: 0;
+  }
+
+  .mobileMenuIcon{
+    height: 30px;
+    width: 30px;
+  }
+
+  .logo {
+    width: 190px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 481px) {
+  .desktopNav {
+    display: none;
+  }
+  
+  .mobileMenuButton {
+    display: flex;
+    align-items: center;
+    border: solid 0.12em #7B46C7;
+    padding: 5px;
+    
+  }
+  .mobileMenuIcon{
+    height: 40px;
+    width: 40px;
+  }
+
+
+}

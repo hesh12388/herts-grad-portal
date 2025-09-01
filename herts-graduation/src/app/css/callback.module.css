@@ -1,0 +1,132 @@
+.callbackPage {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  background: white;
+  border-radius: 12px;
+  padding: 60px 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 30px;
+  border: 4px solid #e9ecef;
+  border-top: 4px solid #9a46cf;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.progress {
+  width: 100%;
+  height: 4px;
+  background: #e9ecef;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #9a46cf 0%, #7B46C7 100%);
+  border-radius: 2px;
+  animation: progressFill 2s ease-in-out infinite;
+}
+
+@keyframes progressFill {
+  0% { width: 20%; }
+  50% { width: 80%; }
+  100% { width: 20%; }
+}
+
+.errorContainer {
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+}
+
+.errorTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #e53e3e;
+  margin-bottom: 12px;
+}
+
+.errorMessage {
+  font-size: 15px;
+  color: #744210;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.retryButton {
+  background: #9a46cf;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retryButton:hover {
+  background: #8a3bb8;
+  transform: translateY(-1px);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding: 40px 24px;
+    margin: 20px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+  }
+}

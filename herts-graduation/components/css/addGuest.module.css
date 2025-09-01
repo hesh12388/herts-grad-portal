@@ -1,0 +1,176 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.header {
+  background-color: #9a46cf;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+  font-size: 0.875rem;
+}
+
+.form {
+  padding: 2rem;
+}
+
+.fieldGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #8b5a96;
+  box-shadow: 0 0 0 3px rgba(139, 90, 150, 0.1);
+}
+
+.fileInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px dashed #d1d5db;
+  border-radius: 0.375rem;
+  background-color: #f9fafb;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+  text-align: center;
+}
+
+.fileInput:hover {
+  border-color: #8b5a96;
+  background-color: #f3f0f5;
+}
+
+.fileInputLabel {
+  display: block;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.fileInputText {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.fileName {
+  color: #8b5a96;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.errorMessage {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 1rem;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.875rem;
+}
+
+.cancelButton {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.cancelButton:hover {
+  background-color: #e5e7eb;
+}
+
+.submitButton {
+  background-color: #9a46cf;
+  color: white;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #7c4d87;
+}
+
+.submitButton:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.loadingSpinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

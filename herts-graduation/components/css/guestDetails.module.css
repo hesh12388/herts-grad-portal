@@ -1,0 +1,209 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.header {
+  background-color: #8b5a96;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+  font-size: 0.875rem;
+}
+
+.content {
+  padding: 2rem;
+}
+
+.fieldGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.value {
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  color: #1f2937;
+  font-size: 1rem;
+  min-height: 1.25rem;
+}
+
+.idDocumentSection {
+  margin-bottom: 1.5rem;
+}
+
+.idDocumentLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: #f3f0f5;
+  color: #8b5a96;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.idDocumentLink:hover {
+  background-color: #e8e1eb;
+}
+
+.statusSection {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.statusBadge {
+  display: inline-flex;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  margin-bottom: 0.5rem;
+}
+
+.statusValid {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.statusScanned {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.statusPending {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.metaInfo {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 1rem;
+}
+
+.closeButtonContainer {
+  display: flex;
+}
+
+.deleteButtonContainer {
+  display: flex;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.875rem;
+}
+
+.closeButton {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.closeButton:hover {
+  background-color: #e5e7eb;
+}
+
+.deleteButton {
+  background-color: #dc2626;
+  color: white;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.deleteButton:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.loadingSpinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.idText {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #6b7280;
+  word-break: break-all;
+  background-color: #f1f5f9;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-top: 0.25rem;
+}
