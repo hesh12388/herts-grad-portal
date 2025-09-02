@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid"
 import QRCode from 'qrcode'
 import { Resend } from 'resend'
 import twilio from 'twilio'
+import jsPDF from "jspdf"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
@@ -85,30 +86,51 @@ export async function POST(req: Request) {
     const qrCodeUrl = `${process.env.NEXTAUTH_URL}/verify/${qrCodeId}`
     
     // Generate QR code as base64 data URL
-    const qrCodeDataURL = await QRCode.toDataURL(qrCodeUrl, {
-      width: 300,
-      margin: 2,
-      color: {
-        dark: '#000000',
-        light: '#FFFFFF'
-      }
-    })
+    const qrCode = await QRCode.toDataURL(qrCodeUrl)
+    const pdf = new jsPDF()
+    pdf.setFontSize(22)
+    pdf.text('Graduation Guest QR Code', 105, 30, { align: 'center' })
+    pdf.setFontSize(14)
+    pdf.text(`Name: ${firstName} ${lastName}`, 105, 45, { align: 'center' })
+    pdf.text(`Government ID: ${governmentId}`, 105, 55, { align: 'center' })
+    pdf.text('Please present this QR code at the event entrance.', 105, 70, { align: 'center' })
 
+    // Draw a border around the QR code
+    pdf.setDrawColor(100, 100, 100)
+    pdf.rect(55, 80, 100, 100)
+
+    pdf.addImage(qrCode, 'PNG', 60, 85, 90, 90)
+    const pdfBuffer = Buffer.from(pdf.output('arraybuffer'))
     console.log("QR code generated for:", qrCodeUrl)
+
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; background: #f9fafb; padding: 2rem;">
+        <div style="max-width: 500px; margin: auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 2rem;">
+          <h2 style="color: #9a46cf; margin-bottom: 0.5rem;">Your Graduation Guest QR Code</h2>
+          <p>Hi <b>${firstName} ${lastName}</b>,</p>
+          <p>Thank you for registering as a guest. Please find your QR code attached as a PDF. Present this code at the event entrance for verification.</p>
+          <p>If you have trouble opening the PDF, you can also use this link:<br>
+            <a href="${qrCodeUrl}" style="color: #9a46cf;">${qrCodeUrl}</a>
+          </p>
+          <hr style="margin: 2rem 0;">
+          <p style="font-size: 0.9rem; color: #888;">If you have any questions, reply to this email.</p>
+          <p style="font-size: 0.9rem; color: #888;">— Herts Cap & Gowns Team</p>
+        </div>
+      </div>
+    `
 
     // Send QR code via email
     try {
       // Send email
       await resend.emails.send({
-        from: process.env.FROM_EMAIL! ,
+        from: process.env.FROM_EMAIL!,
         to: email,
-        subject: 'Your Cap and Gowns Invite - QR Code Inside',
-        html: `
-          <h2>Hey ${firstName},</h2>
-          <p>You've been invited! Here's your QR code for entry:</p>
-          <img src="${qrCodeDataURL}" alt="Your QR Code" style="display: block; margin: 20px auto;" />
-          <p>Please save this QR code to your phone and present it at the event.</p>
-        `
+        subject: 'Your Graduation Guest QR Code',
+        html: emailHtml,
+        attachments: [{
+          filename: 'qr-code.pdf',
+          content: pdfBuffer,
+        }]
       })
 
       console.log("Notifications sent successfully")

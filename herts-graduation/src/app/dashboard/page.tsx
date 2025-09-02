@@ -153,7 +153,7 @@ export default function Dashboard() {
                         onClick={() => handleDeleteGuest(guest)}
                         disabled={deleteGuest.isPending}
                       >
-                        {deleteGuest.isPending ? 'Deleting...' : 'Delete'}
+                        {(deleteGuest.isPending && guest.id === guestToDelete?.id) ? 'Deleting...' : 'Delete'}
                       </button>
                     </td>
                   </tr>
