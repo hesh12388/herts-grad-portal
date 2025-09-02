@@ -3,19 +3,17 @@ import { getToken } from "next-auth/jwt"
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
-  
   // Get the session token
   const token = await getToken({ 
     req, 
     secret: process.env.NEXTAUTH_SECRET 
   })
   
-  console.log("Checking:", pathname, "Token exists:", !!token)
   
   // Check if route needs protection
   const isApiRoute = pathname.startsWith('/api/')
   const isDashboard = pathname.startsWith('/dashboard')
-  const isAdmin = pathname.startsWith('/admin/')
+  const isAdmin = pathname.startsWith('/admin')
   
   // Don't protect NextAuth routes!
   if (pathname.startsWith('/api/auth/')) {
@@ -30,7 +28,7 @@ export async function middleware(req: NextRequest) {
   // Protect dashboard pages
   if (isDashboard) {
     if (!token) {
-      const signInUrl = new URL('/api/auth/signin', req.url)
+      const signInUrl = new URL('/', req.url)
       signInUrl.searchParams.set('callbackUrl', pathname)
       return NextResponse.redirect(signInUrl)
     }
@@ -38,11 +36,10 @@ export async function middleware(req: NextRequest) {
 
   if (isAdmin) {
     if (!token) {
-      const signInUrl = new URL('/api/auth/signin', req.url)
+      const signInUrl = new URL('/', req.url)
       signInUrl.searchParams.set('callbackUrl', pathname)
       return NextResponse.redirect(signInUrl)
     }
-
     if (token.role !== 'ADMIN') {
       return new NextResponse('Forbidden', { status: 403 })
     }
@@ -52,8 +49,10 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
+    '/dashboard',
     '/dashboard/:path*',
     '/api/:path*',
+    '/admin',
     '/admin/:path*'
   ]
 }

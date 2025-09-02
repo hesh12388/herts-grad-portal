@@ -42,6 +42,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const errorParam = searchParams.get('error')
+    const callbackParam = searchParams.get('callbackUrl')
     if (errorParam) {
       switch (errorParam) {
         case 'AccessDenied':
@@ -64,6 +65,16 @@ export default function Navbar() {
       newParams.delete('error')
       const newUrl = `${window.location.pathname}${newParams.toString() ? '?' + newParams.toString() : ''}`
       router.replace(newUrl)
+    }
+
+    if (callbackParam) {
+        signIn('azure-ad', { callbackUrl: `${window.location.origin}${callbackParam}`  })
+        setMobileMenuOpen(false)
+        // Clean up URL (remove callbackUrl param)
+        const newParams = new URLSearchParams(searchParams.toString())
+        newParams.delete('callbackUrl')
+        const newUrl = `${window.location.pathname}${newParams.toString() ? '?' + newParams.toString() : ''}`
+        router.replace(newUrl)
     }
   }, [searchParams, router])
 

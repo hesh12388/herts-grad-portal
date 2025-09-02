@@ -1,9 +1,6 @@
 'use client'
-
-import Image from 'next/image'
 import styles from './css/footer.module.css'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import { signIn, useSession } from 'next-auth/react'
 
 
