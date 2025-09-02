@@ -28,7 +28,11 @@
 }
 
 .searchSection {
-  margin-bottom: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .searchInput {
@@ -283,7 +287,6 @@
 }
 
 .searchButton {
-  margin-left: 1rem;
   padding: 0.5rem 1.25rem;
   background: #9a46cf;
   color: #fff;
