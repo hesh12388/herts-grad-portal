@@ -95,6 +95,7 @@ export default function Dashboard() {
         <div className={styles.header}>
           <h1 className={styles.title}>GUEST MANAGEMENT</h1>
           <p className={styles.subtitle}>Manage your event guests and their QR codes</p>
+          <p className={styles.subtitleWarning}>Please check the spam/junk folder if your guest has not recieved their QR code</p>
         </div>
 
         {/* Add Guest Button */}

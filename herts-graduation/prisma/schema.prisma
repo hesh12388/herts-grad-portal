@@ -21,7 +21,8 @@ model User {
   email     String   @unique
   name      String
   maxGuests Int      @default(50)
-  createdAt DateTime @default(now())  
+  createdAt DateTime @default(now()) 
+  role          UserRole  @default(STUDENT) 
   // Relationships
   guests    Guest[]  // One user can have many guests
   
@@ -71,4 +72,9 @@ enum QRStatus {
   USED     // Already scanned/used
   EXPIRED  // Past expiration
   REVOKED  // Manually disabled
+}
+
+enum UserRole {
+  STUDENT
+  ADMIN
 }

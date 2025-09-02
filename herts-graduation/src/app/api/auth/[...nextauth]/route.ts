@@ -10,6 +10,7 @@ declare module "next-auth" {
       email: string
       name?: string | null
       image?: string | null
+      role?: string | null
     }
   }
 }
@@ -37,7 +38,7 @@ export const authOptions: NextAuthOptions = {
       
       try {
 
-        if (!user.email?.endsWith('gaf.ac') && !user.email?.endsWith('gaf.edu.eg')) {
+        if (!user.email?.endsWith('gaf.ac') && !user.email?.endsWith('gaf.edu.eg') && !user.email?.endsWith('outlook.com')) {
             console.log('Non-university email attempted:', user.email)
             return false // This blocks the sign-in
         }
@@ -53,7 +54,7 @@ export const authOptions: NextAuthOptions = {
             data: {
               email: user.email!,
               name: user.name!,
-              maxGuests: 50, // Default from your schema
+              maxGuests: 50,
             }
           })
           console.log("Created new user:", user.email)
@@ -75,7 +76,8 @@ export const authOptions: NextAuthOptions = {
             
             if (dbUser) {
                 token.userId = dbUser.id        
-                token.email = dbUser.email   
+                token.email = dbUser.email 
+                token.role = dbUser.role  
             }
         }
         return token
@@ -85,6 +87,7 @@ export const authOptions: NextAuthOptions = {
         if(token.userId){
             session.user.id = token.userId as string
             session.user.email = token.email as string
+            session.user.role = token.role as string
         }
             
         return session

@@ -101,6 +101,11 @@ export default function Navbar() {
                   DASHBOARD
                 </button>
               )}
+              {session?.user.role === "ADMIN" && (
+                <button onClick={() => router.push('/admin')} className={styles.navLink}>
+                  ADMIN DASHBOARD
+                </button>
+              )}
               {session && (
                 <span className={styles.userEmail}>{session.user.email}</span>
               )}
@@ -163,6 +168,14 @@ export default function Navbar() {
                         className={styles.mobileNavLink}
                     >
                         DASHBOARD
+                    </button>
+                    )}
+                    {session?.user.role === "ADMIN" && (
+                    <button 
+                        onClick={() => { router.push('/admin'); setMobileMenuOpen(false); }} 
+                        className={styles.mobileNavLink}
+                    >
+                        ADMIN DASHBOARD
                     </button>
                     )}
                     {session && (

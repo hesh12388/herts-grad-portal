@@ -40,7 +40,7 @@ export default function GuestDetailsModal({ guest, onClose }: GuestDetailsModalP
         try {
             await deleteGuest.mutateAsync(guest.id)
         } catch (error) {
-            router.push(`/dashboard?error=${encodeURIComponent('Failed to delete guest')}`)
+            router.push(`${window.location.pathname}?error=${encodeURIComponent('Failed to delete guest')}`)
         }
         finally{
             onClose()

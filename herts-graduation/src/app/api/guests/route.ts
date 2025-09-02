@@ -165,14 +165,25 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: "Guest ID is required" }, { status: 400 })
     }
 
-    // Verify the guest belongs to the current user
-    const existingGuest = await prisma.guest.findFirst({
-      where: {
-        id: guestId,
-        userId: session.user.id
-      },
-      include: { qrCode: true }
-    })
+    
+    let existingGuest = null;
+
+    if(session.user.role === 'ADMIN') {
+      // Admin can delete any guest
+      existingGuest = await prisma.guest.findUnique({
+        where: { id: guestId },
+        include: { qrCode: true }
+      })
+    } else {
+      // Verify the guest belongs to the current user
+      existingGuest = await prisma.guest.findFirst({
+        where: {
+          id: guestId,
+          userId: session.user.id
+        },
+        include: { qrCode: true }
+      })
+    }
 
     if (!existingGuest) {
       return NextResponse.json({ error: "Guest not found" }, { status: 404 })
@@ -201,7 +212,7 @@ export async function DELETE(req: Request) {
       where: { id: guestId }
     })
 
-    return NextResponse.json({ message: "Guest deleted successfully" })
+    return NextResponse.json({ message: "Guest deleted successfully", userId: existingGuest.userId })
 
   } catch (error) {
     console.error("Error deleting guest:", error)

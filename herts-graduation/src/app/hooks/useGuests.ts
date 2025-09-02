@@ -96,8 +96,13 @@ export function useDeleteGuest() {
 
       return response.json()
     },
-    onSuccess: (_, guestId) => {
+    onSuccess: (data, guestId) => {
       queryClient.setQueryData(['guests'], (old: Guest[] | undefined) => {
+        if (!old) return []
+        return old.filter(guest => guest.id !== guestId)
+      })
+
+      queryClient.setQueryData(['user-guests', data.userId], (old: Guest[] | undefined) => {
         if (!old) return []
         return old.filter(guest => guest.id !== guestId)
       })
