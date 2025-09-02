@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest) {
   const isAdmin = pathname.startsWith('/admin')
   
   // Don't protect NextAuth routes!
-  if (pathname.startsWith('/api/auth/')) {
+  if (pathname.startsWith('/api/auth/') || pathname.startsWith('/api/verify/')) {
     return NextResponse.next()
   }
   
