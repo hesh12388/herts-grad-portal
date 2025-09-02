@@ -211,12 +211,16 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: "Guest not found" }, { status: 404 })
     }
 
+    // Delete guest (QR code will be deleted automatically due to cascade)
+    await prisma.guest.delete({
+      where: { id: guestId }
+    })
+
     try {
       const s3 = new S3Client({ region: process.env.AWS_REGION })
       
       // Extract the S3 key from the URL
-      const url = new URL(existingGuest.idImageUrl)
-      const s3Key = url.pathname.substring(1)
+      const s3Key = existingGuest.idImageUrl.split('.amazonaws.com/')[1]
       
       const deleteCommand = new DeleteObjectCommand({
         Bucket: process.env.AWS_S3_BUCKET!,
@@ -228,11 +232,6 @@ export async function DELETE(req: Request) {
     } catch (s3Error) {
       console.error("Failed to delete S3 file:", s3Error)
     }
-
-    // Delete guest (QR code will be deleted automatically due to cascade)
-    await prisma.guest.delete({
-      where: { id: guestId }
-    })
 
     return NextResponse.json({ message: "Guest deleted successfully", userId: existingGuest.userId })
 

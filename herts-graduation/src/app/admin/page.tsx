@@ -4,7 +4,6 @@ import { useState, useMemo } from 'react'
 import { useAdminUsers} from '@/app/hooks/useAdminUsers'
 import { useUserGuests } from '@/app/hooks/useUserGuests'
 import GuestDetailsModal from '../../../components/GuestDetailsForm'
-import { useRouter } from 'next/navigation'
 import styles from '@/app/css/admin.module.css'
 
 interface User {
