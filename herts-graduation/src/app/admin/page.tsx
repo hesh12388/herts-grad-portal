@@ -219,7 +219,7 @@ function UserCard({
         </div>
         <div className={styles.userStats}>
           <div className={styles.guestCount}>
-            {guests?.length || '0'} guests
+            {guests ? guests.length : user._count.guests} guests
           </div>
           <div className={`${styles.expandIcon} ${isExpanded ? styles.expanded : ''}`}>
             ▼
