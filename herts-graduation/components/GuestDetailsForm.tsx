@@ -65,8 +65,9 @@ export default function GuestDetailsModal({ guest, onClose }: GuestDetailsModalP
 
     const handleViewDocument = async () => {
         const key = guest.idImageUrl.split('.amazonaws.com/')[1]
+        const newWindow = window.open('', '_blank')
         const url = await fetchSignedUrl(key)
-        window.open(url, '_blank')
+        if (newWindow) newWindow.location.href = url
     }
 
     const getStatusClass = (status?: string) => {
