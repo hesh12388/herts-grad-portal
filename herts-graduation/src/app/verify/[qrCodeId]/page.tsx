@@ -6,7 +6,7 @@ import styles from '@/app/css/verifyPage.module.css'
 
 interface VerificationResult {
   message: string
-  status: 'SUCCESS' | 'INVALID' | 'ERROR' | 'USED'
+  status: 'SUCCESS' | 'INVALID' | 'ERROR' | 'USED' | 'TOO_EARLY'
   guest?: {
     firstName: string
     lastName: string
@@ -95,6 +95,32 @@ export default function VerifyPage() {
             <div className={styles.errorContent}>
               <div className={styles.errorIcon}>❌</div>
               <p className={styles.errorMessage}>Something went wrong while verifying your QR code.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+
+  if (result.status === 'TOO_EARLY') {
+    return (
+      <div className={styles.container}>
+        <div className={styles.card}>
+          <div className={styles.warningHeader}>
+            <h1 className={styles.title}>TOO EARLY</h1>
+            <p className={styles.subtitle}>Event has not started yet</p>
+          </div>
+          <div className={styles.content}>
+            <div className={styles.errorContent}>
+              <div className={styles.errorIcon}>📅</div>
+              <p className={styles.warningMessage}>QR code verification is not available yet.</p>
+              
+              <div className={styles.warningDetails}>
+                <p><strong>Event Date:</strong> September 10th, 2025</p>
+                <p>Please return on the event date to verify your QR code.</p>
+                <p><strong>Important:</strong> Only have a member of staff scan this QR code.</p>
+              </div>
             </div>
           </div>
         </div>

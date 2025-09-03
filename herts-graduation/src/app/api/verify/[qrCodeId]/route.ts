@@ -12,6 +12,18 @@ export async function GET(
       return NextResponse.json({ error: "QR Code ID is required" }, { status: 400 })
     }
 
+    const eventDateString = process.env.EVENT_DATE || '2025-09-10'
+    const eventDate = new Date(`${eventDateString}T00:00:00.000Z`)
+    const currentDate = new Date()
+    
+    if (currentDate < eventDate) {
+      return NextResponse.json({ 
+        error: "QR code verification is not available yet. Please try again on September 10th, 2025.",
+        status: "TOO_EARLY",
+        eventDate: eventDate.toISOString()
+      }, { status: 400 })
+    }
+
     // Find the QR code and associated guest
     const qrCode = await prisma.qRCode.findUnique({
       where: { code: qrCodeId },
@@ -47,6 +59,8 @@ export async function GET(
         guest: true
       }
     })
+
+
 
     return NextResponse.json({
       message: "QR code verified successfully",
