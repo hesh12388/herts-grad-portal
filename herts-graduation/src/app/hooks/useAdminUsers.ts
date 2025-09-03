@@ -8,6 +8,9 @@ interface User {
   createdAt: string
   _count: {
     guests: number
+  },
+  graduate:{
+    id:string
   }
 }
 
@@ -19,6 +22,11 @@ interface UsersResponse {
     totalCount: number
     totalPages: number
     hasNextPage: boolean
+  },
+  stats:{
+    totalUsers: number,
+    totalGuests: number,
+    totalGraduates: number
   }
 }
 

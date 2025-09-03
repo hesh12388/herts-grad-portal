@@ -13,6 +13,7 @@ interface Guest {
   qrCode?: {
     id: string
     code: string
+    type: string
     status: string
     scannedAt?: string
     createdAt: string

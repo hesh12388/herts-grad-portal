@@ -147,6 +147,7 @@
 .guestsSection {
   border-top: 1px solid #e5e7eb;
   background-color: #f8fafc;
+  padding: 1rem;
 }
 
 .guestsLoading {
@@ -232,6 +233,13 @@
   font-style: italic;
 }
 
+.noRegistration{
+  padding: 2rem;
+  text-align: center;
+  color: #6b7280;
+  font-style: italic;
+}
+
 .loadMoreContainer {
   padding: 2rem;
   text-align: center;
@@ -294,4 +302,62 @@
   border-radius: 0.5rem;
   font-weight: 500;
   cursor: pointer;
+}
+
+.graduateIndicator {
+  background-color: #fef3c7;
+  color: #d97706;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.notRegisteredIndicator {
+  background-color: #f14906;
+  color: #fef3c7;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.graduateSection {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.graduateItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fef3c7;
+  border: 1px solid #fed7aa;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.graduateItem:hover {
+  border-color: #d97706;
+  box-shadow: 0 1px 3px rgba(217, 119, 6, 0.1);
+}
+
+.sectionHeader {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 680px) {
+ .userHeader{
+  display: flex;
+  flex-direction: column;
+  gap:5
+ }
 }

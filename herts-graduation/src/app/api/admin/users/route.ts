@@ -26,8 +26,7 @@ export async function GET(req: Request) {
         ]
       })
     }
-
-    const [users, totalCount] = await Promise.all([
+    const [users, totalCount, totalGuests, totalGraduates] = await Promise.all([
       prisma.user.findMany({
         where: whereClause,
         skip,
@@ -35,13 +34,19 @@ export async function GET(req: Request) {
         orderBy: { createdAt: 'desc' },
         include: {
           _count: {
-            select: { guests: true }
+            select: { 
+              guests: true,
+            }
+          },
+          graduate: {
+            select: { id: true }
           }
         }
       }),
-      prisma.user.count({ where: whereClause })
+      prisma.user.count({ where: whereClause }),
+      prisma.guest.count(), 
+      prisma.graduate.count()
     ])
-
     const hasNextPage = skip + limit < totalCount
 
     return NextResponse.json({
@@ -52,6 +57,11 @@ export async function GET(req: Request) {
         totalCount,
         totalPages: Math.ceil(totalCount / limit),
         hasNextPage
+      },
+      stats: {
+        totalUsers: totalCount,
+        totalGuests,
+        totalGraduates
       }
     })
   } catch (error) {

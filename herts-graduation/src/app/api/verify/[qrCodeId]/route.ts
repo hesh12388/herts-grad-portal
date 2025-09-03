@@ -28,7 +28,8 @@ export async function GET(
     const qrCode = await prisma.qRCode.findUnique({
       where: { code: qrCodeId },
       include: {
-        guest: true
+        guest: true,
+        graduate: true
       }
     })
 
@@ -56,22 +57,37 @@ export async function GET(
         scannedAt: new Date()
       },
       include: {
-        guest: true
+        guest: true,
+        graduate: true
       }
     })
 
-
-
-    return NextResponse.json({
-      message: "QR code verified successfully",
-      status: "SUCCESS",
-      guest: {
-        firstName: updatedQrCode.guest.firstName,
-        lastName: updatedQrCode.guest.lastName,
-        governmentId: updatedQrCode.guest.governmentId
-      },
-      scannedAt: updatedQrCode.scannedAt
-    })
+    if (updatedQrCode.type === 'GRADUATE') {
+      return NextResponse.json({
+        message: "Graduate QR code verified successfully",
+        status: "SUCCESS",
+        type: "GRADUATE",
+        graduate: {
+          name: updatedQrCode.graduate!.name,
+          major: updatedQrCode.graduate!.major,
+          gafIdNumber: updatedQrCode.graduate!.gafIdNumber,
+          governmentId: updatedQrCode.graduate!.governmentId
+        },
+        scannedAt: updatedQrCode.scannedAt
+      })
+    } else {
+      return NextResponse.json({
+        message: "Guest QR code verified successfully",
+        status: "SUCCESS",
+        type: "GUEST",
+        guest: {
+          firstName: updatedQrCode.guest!.firstName,
+          lastName: updatedQrCode.guest!.lastName,
+          governmentId: updatedQrCode.guest!.governmentId
+        },
+        scannedAt: updatedQrCode.scannedAt
+      })
+    }
 
   } catch (error) {
     console.error("Error verifying QR code:", error)

@@ -14,6 +14,27 @@ interface Guest {
   qrCode?: {
     id: string
     code: string
+    type: string
+    status: string
+    scannedAt?: string
+    createdAt: string
+  }
+}
+
+interface Graduate {
+  id: string
+  name: string
+  major: string
+  dateOfBirth: string
+  gafIdNumber: string
+  governmentId: string
+  idImageUrl: string
+  createdAt: string
+  updatedAt: string
+  qrCode?: {
+    id: string
+    code: string
+    type: string
     status: string
     scannedAt?: string
     createdAt: string
@@ -28,6 +49,16 @@ interface CreateGuestData {
   email: string
   idImage: File
 }
+
+interface CreateGraduateData {
+  name: string
+  major: string
+  dateOfBirth: string
+  gafIdNumber: string
+  governmentId: string
+  idImage: File
+}
+
 
 // Get guests query
 export function useGuests() {
@@ -107,5 +138,68 @@ export function useDeleteGuest() {
         return old.filter(guest => guest.id !== guestId)
       })
     }
+  })
+}
+
+export function useGraduate() {
+  return useQuery({
+    queryKey: ['graduate'],
+    queryFn: async (): Promise<Graduate | null> => {
+      const response = await fetch('/api/graduates')
+      if (!response.ok) {
+        throw new Error('Failed to fetch graduate')
+      }
+      const data = await response.json()
+      return data.graduate
+    }
+  })
+}
+
+export function useCreateGraduate() {
+  const queryClient = useQueryClient()
+  
+  return useMutation({
+    mutationFn: async (data: CreateGraduateData) => {
+      const formData = new FormData()
+      formData.append('name', data.name)
+      formData.append('major', data.major)
+      formData.append('dateOfBirth', data.dateOfBirth)
+      formData.append('gafIdNumber', data.gafIdNumber)
+      formData.append('governmentId', data.governmentId)
+      formData.append('idImage', data.idImage)
+
+      const response = await fetch('/api/graduates', {
+        method: 'POST',
+        body: formData
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || 'Failed to create graduate registration')
+      }
+
+      return response.json()
+    },
+    onSuccess: (data) => {
+      // Update the graduate query cache
+      queryClient.setQueryData(['graduate'], data.graduate)
+    }
+  })
+}
+
+export function useUserGraduate(userId: string, enabled: boolean = true) {
+  return useQuery({
+    queryKey: ['user-graduate', userId],
+    queryFn: async () => {
+      const response = await fetch(`/api/graduates/${userId}`)
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch user graduate')
+      }
+      
+      const data = await response.json()
+      return data.graduate as Graduate | null
+    },
+    enabled
   })
 }

@@ -25,6 +25,7 @@ model User {
   role          UserRole  @default(STUDENT) 
   // Relationships
   guests    Guest[]  // One user can have many guests
+  graduate Graduate?
   
   @@map("users")
 }
@@ -56,25 +57,52 @@ model QRCode {
   id        String     @id @default(uuid())
   code      String     @unique
   status    QRStatus   @default(VALID)
+  type QRCodeType @default(GUEST)
   scannedAt DateTime?  
   createdAt DateTime   @default(now())
   
   // Foreign keys
-  guestId   String     @unique // One-to-one with guest
-  guest     Guest      @relation(fields: [guestId], references: [id], onDelete: Cascade)
+  guestId   String?     @unique // One-to-one with guest
+  guest     Guest?      @relation(fields: [guestId], references: [id], onDelete: Cascade)
+
+  graduateId String? @unique  
+  graduate Graduate? @relation(fields: [graduateId], references: [id], onDelete: Cascade)
   
   @@map("qr_codes")
 }
 
+model Graduate {
+  id String @id @default(uuid())
+  name String
+  major String
+  dateOfBirth DateTime
+  gafIdNumber String
+  governmentId String
+  idImageUrl String // S3 URL for government ID photo
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Foreign keys
+  userId String @unique // One graduate per user
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  qrCode         QRCode?
+
+  @@map("graduates")
+}
+
 // Enum for QR code status
 enum QRStatus {
-  VALID    // Can be used for entry
-  USED     // Already scanned/used
-  EXPIRED  // Past expiration
-  REVOKED  // Manually disabled
+  VALID   
+  USED  
 }
 
 enum UserRole {
   STUDENT
   ADMIN
+}
+
+enum QRCodeType {
+  GUEST
+  GRADUATE
 }

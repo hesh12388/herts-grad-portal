@@ -1,13 +1,15 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useGuests, useDeleteGuest } from '@/app/hooks/useGuests'
+import { useRouter } from 'next/navigation'
+import { useGuests, useDeleteGuest, useGraduate } from '@/app/hooks/useGuests'
 import styles from '@/app/css/dashboard.module.css'
 import AddGuestForm from '../../../components/AddGuestForm'
 import ConfirmDeleteModal from '../../../components/ConfirmDeleteModal'
 import GuestDetailsForm from '../../../components/GuestDetailsForm'
 import { useSession } from 'next-auth/react'
+import AddGraduateForm from '../../../components/AddGraduateForm'
+import ViewGraduateDetails from '../../../components/GraduateDetailsForm'
 
 interface Guest {
   id: string
@@ -22,6 +24,7 @@ interface Guest {
   qrCode?: {
     id: string
     code: string
+    type: string
     status: string
     scannedAt?: string
     createdAt: string
@@ -32,10 +35,13 @@ export default function Dashboard() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [showAddForm, setShowAddForm] = useState(false)
+  const [showGraduateForm, setShowGraduateForm] = useState(false)
+  const [showGraduateDetails, setShowGraduateDetails] = useState(false)
   const [guestToDelete, setGuestToDelete] = useState<Guest | null>(null)
   const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null)
   
   const { data: guests, isLoading, isError } = useGuests()
+  const { data: graduate, isLoading: graduateLoading } = useGraduate()
   const deleteGuest = useDeleteGuest()
 
   useEffect(() => {
@@ -95,7 +101,7 @@ export default function Dashboard() {
         <div className={styles.header}>
           <h1 className={styles.title}>GUEST MANAGEMENT</h1>
           <p className={styles.subtitle}>Manage your event guests and their QR codes</p>
-          <p className={styles.subtitleWarning}>Please check the spam/junk folder if your guest has not recieved their QR code</p>
+          <p className={styles.subtitleWarning}>Please check the spam/junk folder if you or your guests have not recieved your QR codes</p>
         </div>
 
         {/* Add Guest Button */}
@@ -106,6 +112,39 @@ export default function Dashboard() {
           >
             ADD NEW GUEST
           </button>
+        </div>
+
+        {/* Graduate Registration Section */}
+        <div className={styles.graduateSection}>
+          <h2 className={styles.sectionTitle}>GRADUATE REGISTRATION</h2>
+          
+          {graduateLoading ? (
+            <div className={styles.loadingText}>Loading registration...</div>
+          ) : graduate ? (
+            <div className={styles.graduateCard}>
+              <div className={styles.graduateInfo}>
+                <h3>{graduate.name}</h3>
+                <p>Major: {graduate.major}</p>
+                <p>Status: Registered ✅</p>
+              </div>
+              <button
+                onClick={() => setShowGraduateDetails(true)}
+                className={styles.viewButtonGrad}
+              >
+                View Details
+              </button>
+            </div>
+          ) : (
+            <div className={styles.emptyGraduate}>
+              <p>Complete your graduation registration to receive your QR code.</p>
+              <button
+                onClick={() => setShowGraduateForm(true)}
+                className={styles.registerButton}
+              >
+                REGISTER FOR GRADUATION
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Guests Table */}
@@ -194,6 +233,17 @@ export default function Dashboard() {
                 guest={selectedGuest}
                 onClose={() => setSelectedGuest(null)}
             />
+        )}
+        {/* Graduate Forms */}
+        {showGraduateForm && (
+          <AddGraduateForm onClose={() => setShowGraduateForm(false)} />
+        )}
+
+        {showGraduateDetails && graduate && (
+          <ViewGraduateDetails
+            graduate={graduate}
+            onClose={() => setShowGraduateDetails(false)}
+          />
         )}
     </div>
   )

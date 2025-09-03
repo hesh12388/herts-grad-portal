@@ -7,9 +7,16 @@ import styles from '@/app/css/verifyPage.module.css'
 interface VerificationResult {
   message: string
   status: 'SUCCESS' | 'INVALID' | 'ERROR' | 'USED' | 'TOO_EARLY'
+  type?: 'GUEST' | 'GRADUATE'
   guest?: {
     firstName: string
     lastName: string
+    governmentId: string
+  }
+  graduate?: { 
+    name: string
+    major: string
+    gafIdNumber: string
     governmentId: string
   }
   scannedAt?: string
@@ -33,7 +40,9 @@ export default function VerifyPage() {
           setResult({
             message: data.message,
             status: 'SUCCESS',
+            type: data.type,
             guest: data.guest,
+            graduate: data.graduate,
             scannedAt: data.scannedAt
           })
         } else {
@@ -149,6 +158,28 @@ export default function VerifyPage() {
                   </div>
                   <div className={styles.guestDetail}>
                     ID: {result.guest.governmentId}
+                  </div>
+                  {result.scannedAt && (
+                    <div className={styles.timestamp}>
+                      Verified at: {formatDate(result.scannedAt)}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {result.graduate && (
+                <div className={styles.guestInfo}>
+                  <div className={styles.guestName}>
+                    {result.graduate.name}
+                  </div>
+                  <div className={styles.guestDetail}>
+                    Major: {result.graduate.major}
+                  </div>
+                  <div className={styles.guestDetail}>
+                    GAF ID: {result.graduate.gafIdNumber}
+                  </div>
+                  <div className={styles.guestDetail}>
+                    Government ID: {result.graduate.governmentId}
                   </div>
                   {result.scannedAt && (
                     <div className={styles.timestamp}>
