@@ -126,7 +126,7 @@ export default function VerifyPage() {
               <p className={styles.warningMessage}>QR code verification is not available yet.</p>
               
               <div className={styles.warningDetails}>
-                <p><strong>Event Date:</strong> September 10th, 2025</p>
+                <p><strong>Event Date:</strong> September 18th, 2025</p>
                 <p>Please return on the event date to verify your QR code.</p>
                 <p><strong>Important:</strong> Only have a member of staff scan this QR code.</p>
               </div>
