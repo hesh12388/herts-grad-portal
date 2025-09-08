@@ -34,10 +34,19 @@
 
 .logo {
   position: relative;
-  width: 300px;
-  height: 60px;
+  width: 230px;
+  height: 45px;
 }
-
+.logoSeperator{
+  width:2px;
+  background-color:black;
+  margin-left:10px;
+  margin-right:10px;
+}
+.logoBar{
+  display: flex;
+  flex-direction: row;
+}
 /* Desktop Navigation */
 .desktopNav {
   display: flex;
@@ -241,8 +250,8 @@
   }
 
   .logo {
-    width: 190px;
-    height: 40px;
+    width: 105px;
+    height: 20px;
   }
 }
 
@@ -263,5 +272,8 @@
     width: 40px;
   }
 
-
+  .logo {
+    width: 160px;
+    height: 30px;
+  }
 }

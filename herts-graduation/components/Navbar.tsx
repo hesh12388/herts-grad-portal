@@ -97,9 +97,15 @@ export default function Navbar() {
       <nav className={styles.navbar}>
         <div className={styles.container}>
           {/* Logo */}
-          <Link className={styles.logo} href="/">
-            <Image src="/images/logo.png" alt="University Logo" fill />
-          </Link>
+          <div className={styles.logoBar}>
+            <Link className={styles.logo} href="/">
+              <Image src="/images/logo.png" alt="University Logo" fill />
+            </Link>
+            <span className={styles.logoSeperator}></span>
+            <Link className={styles.logo} href="/">
+              <Image src="/images/hertssu_logo.png" alt="University Logo" fill />
+            </Link>
+          </div>
           
           {/* Desktop Navigation */}
           <div className={styles.desktopNav}>
