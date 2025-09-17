@@ -27,12 +27,27 @@
   font-size: 1rem;
 }
 
+.searchContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
 .searchSection {
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  flex:1;
+}
+
+.exportContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
 }
 
 .searchInput {
@@ -283,6 +298,17 @@
   margin: 0 auto 1rem auto;
 }
 
+.exportingSpinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid #fff;
+  border-top: 2px solid #9a46cf;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -304,6 +330,37 @@
   cursor: pointer;
 }
 
+.exportGuestButton {
+  padding: 0.5rem 1.25rem;
+  background: #9a46cf;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.exportGraduateButton {
+  padding: 0.5rem 1.25rem;
+  background: #d97706;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.exportGraduateButton:hover{
+  background: #b45309;
+}
+
+.exportGuestButton:hover {
+  background: #7c4d87;
+}
+
+.searchButton:hover {
+  background: #7c4d87;
+}
 .graduateIndicator {
   background-color: #fef3c7;
   color: #d97706;
@@ -354,10 +411,33 @@
   letter-spacing: 0.05em;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 700px) {
  .userHeader{
   display: flex;
   flex-direction: column;
   gap:5
  }
+ .searchContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .searchSection,
+  .exportContainer {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 701px)  {
+ .searchContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .searchSection,
+  .exportContainer {
+    width: 100%;
+  }
 }

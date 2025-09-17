@@ -68,7 +68,8 @@ export default function AdminPage() {
   const [expandedUsers, setExpandedUsers] = useState<Set<string>>(new Set())
   const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null)
   const [selectedGraduate, setSelectedGraduate] = useState<Graduate | null>(null)
-
+  const [isExportingGuests, setIsExportingGuests] = useState(false)
+  const [isExportingGraduates, setIsExportingGraduates] = useState(false)
   const {
     data,
     fetchNextPage,
@@ -109,6 +110,40 @@ export default function AdminPage() {
     }
   }
 
+  const handleExportGuests = async () => {
+    setIsExportingGuests(true)
+    try {
+      const res = await fetch('/api/export/guests')
+      const data = await res.json()
+      if (data.url) {
+        window.open(data.url, '_blank')
+      } else {
+        alert('Failed to generate guests PDF.')
+      }
+    } catch (err) {
+      alert('Error exporting guests.')
+    } finally {
+      setIsExportingGuests(false)
+    }
+  }
+
+  const handleExportGraduates = async () => {
+    setIsExportingGraduates(true)
+    try {
+      const res = await fetch('/api/export/graduates')
+      const data = await res.json()
+      if (data.url) {
+        window.open(data.url, '_blank')
+      } else {
+        alert('Failed to generate graduates PDF.')
+      }
+    } catch (err) {
+      alert('Error exporting graduates.')
+    } finally {
+      setIsExportingGraduates(false)
+    }
+  }
+
   if (isLoading) {
     return (
       <div className={styles.container}>
@@ -140,23 +175,56 @@ export default function AdminPage() {
         </div>
 
         {/* Search */}
-        <form 
-        className={styles.searchSection} 
-        onSubmit={e => {
-            e.preventDefault()
-            setSearchTerm(searchInput)
-        }}>
-            <input
-                type="text"
-                placeholder="Search users by name or email..."
-                value={searchInput}
-                onChange={e => setSearchInput(e.target.value)}
-                className={styles.searchInput}
-            />
-            <button type="submit" className={styles.searchButton}>
-                Search
-            </button>
-        </form>
+        <div className={styles.searchContainer}>
+          <form 
+          className={styles.searchSection} 
+          onSubmit={e => {
+              e.preventDefault()
+              setSearchTerm(searchInput)
+          }}>
+              <input
+                  type="text"
+                  placeholder="Search users by name or email..."
+                  value={searchInput}
+                  onChange={e => setSearchInput(e.target.value)}
+                  className={styles.searchInput}
+              />
+              <button type="submit" className={styles.searchButton}>
+                  Search
+              </button>
+          </form>
+          <div className={styles.exportContainer}>
+              <button
+                className={styles.exportGuestButton}
+                onClick={handleExportGuests}
+                disabled={isExportingGuests}
+              >
+                {isExportingGuests ? (
+                  <>
+                    Exporting...
+                    <span className={styles.exportingSpinner} />
+                  </>
+                ) : (
+                  'Export Guests'
+                )}
+              </button>
+              <button
+                className={styles.exportGraduateButton}
+                onClick={handleExportGraduates}
+                disabled={isExportingGraduates}
+              >
+                {isExportingGraduates ? (
+                  <>
+                    Exporting...
+                    <span className={styles.exportingSpinner} />
+                  </>
+                ) : (
+                  'Export Graduates'
+                )}
+              </button>
+          </div>
+        </div>
+        
 
         {/* Summary Stats */}
         <div className={styles.statsSection}>
