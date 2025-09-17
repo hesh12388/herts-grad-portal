@@ -116,7 +116,12 @@ export default function AdminPage() {
       const res = await fetch('/api/export/guests')
       const data = await res.json()
       if (data.url) {
-        window.open(data.url, '_blank')
+        const link = document.createElement('a')
+        link.href = data.url
+        link.download = 'guests-list.pdf'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
       } else {
         alert('Failed to generate guests PDF.')
       }
@@ -133,7 +138,12 @@ export default function AdminPage() {
       const res = await fetch('/api/export/graduates')
       const data = await res.json()
       if (data.url) {
-        window.open(data.url, '_blank')
+        const link = document.createElement('a')
+        link.href = data.url
+        link.download = 'graduates-list.pdf'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
       } else {
         alert('Failed to generate graduates PDF.')
       }

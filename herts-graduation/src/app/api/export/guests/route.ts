@@ -51,7 +51,7 @@ export async function GET() {
   // Return presigned URL
   const url = await getSignedUrl(
     s3,
-    new GetObjectCommand({ Bucket: process.env.AWS_S3_BUCKET!, Key: fileKey }),
+    new GetObjectCommand({ Bucket: process.env.AWS_S3_BUCKET!, Key: fileKey, ResponseContentDisposition: 'attachment; filename="guests-list.pdf"' }),
     { expiresIn: 60 * 10 }
   )
   return NextResponse.json({ url })
