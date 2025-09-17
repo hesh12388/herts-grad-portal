@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/app/lib/prisma"
-
+import { formatInTimeZone } from 'date-fns-tz'
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ qrCodeId: string }> }
@@ -13,19 +13,17 @@ export async function GET(
     }
 
     const eventDateString = process.env.EVENT_DATE
+    const cairoTimeZone = "Africa/Cairo"
 
-    // Create event date at midnight Cairo time
-    const eventDate = new Date(`${eventDateString}T00:00:00`)
-    const eventDateCairo = new Date(eventDate.toLocaleString("en-US", { timeZone: "Africa/Cairo" }))
-
-    // Get current time in Cairo
-    const currentDateCairo = new Date(new Date().toLocaleString("en-US", { timeZone: "Africa/Cairo" }))
-
-    if (currentDateCairo < eventDateCairo) {
+    // Get current date in Cairo timezone
+    const now = new Date()
+    const currentDateCairo = formatInTimeZone(now, cairoTimeZone, 'yyyy-MM-dd')
+  
+    if (currentDateCairo < eventDateString!) {
       return NextResponse.json({
         error: "QR code verification is not available yet.",
         status: "TOO_EARLY",
-        eventDate: eventDateCairo.toISOString()
+        eventDate: eventDateString!
       }, { status: 400 })
     }
 
