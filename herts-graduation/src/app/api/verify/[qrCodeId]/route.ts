@@ -12,15 +12,20 @@ export async function GET(
       return NextResponse.json({ error: "QR Code ID is required" }, { status: 400 })
     }
 
-    const eventDateString = process.env.EVENT_DATE || '2025-09-10'
-    const eventDate = new Date(`${eventDateString}T00:00:00.000Z`)
-    const currentDate = new Date()
-    
-    if (currentDate < eventDate) {
-      return NextResponse.json({ 
-        error: "QR code verification is not available yet. Please try again on September 10th, 2025.",
+    const eventDateString = process.env.EVENT_DATE
+
+    // Create event date at midnight Cairo time
+    const eventDate = new Date(`${eventDateString}T00:00:00`)
+    const eventDateCairo = new Date(eventDate.toLocaleString("en-US", { timeZone: "Africa/Cairo" }))
+
+    // Get current time in Cairo
+    const currentDateCairo = new Date(new Date().toLocaleString("en-US", { timeZone: "Africa/Cairo" }))
+
+    if (currentDateCairo < eventDateCairo) {
+      return NextResponse.json({
+        error: "QR code verification is not available yet.",
         status: "TOO_EARLY",
-        eventDate: eventDate.toISOString()
+        eventDate: eventDateCairo.toISOString()
       }, { status: 400 })
     }
 
@@ -50,11 +55,13 @@ export async function GET(
     }
 
     // Mark as scanned
+    const cairoTime = new Date(new Date().toLocaleString("en-US", { timeZone: "Africa/Cairo" }))
+
     const updatedQrCode = await prisma.qRCode.update({
       where: { id: qrCode.id },
       data: {
         status: 'USED',
-        scannedAt: new Date()
+        scannedAt: cairoTime
       },
       include: {
         guest: true,
